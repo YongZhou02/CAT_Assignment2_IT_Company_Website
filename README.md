@@ -3,7 +3,7 @@
 ## Project Overview
 This project is a simulated corporate website for a fictional IT-related company (e.g., Software House, IoT Specialist). It is developed as part of the **CAT201 Integrated Software Development Workshop** (Semester 1, 2025/2026).
 
-[cite_start]The objective is to apply principles of GUI design using modern web tools to create a responsive company homepage that includes text, images, and video content.
+The objective is to apply principles of GUI design using modern web tools to create a responsive company homepage that includes text, images, and video content.
 
 ## 🛠 Tech Stack
 * **Runtime:** Node.js
