@@ -39,4 +39,6 @@ Make sure you have **Node.js** installed on your machine.
 ### Running the App
 To start the development server:
 ```bash
+cd frontend
+
 npm run dev
