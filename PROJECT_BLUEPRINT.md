@@ -10,7 +10,7 @@ Per assignment requirements, we must document our individual scope in the final 
 * **Focus:** React Component Structure & Responsive Layout.
 * **Tasks:**
     * Create the global Layout (Navbar, Footer).
-    * Ensure CSS works on Desktop.
+    * Ensure CSS works on Desktop & Mobile.
     * Build the "Services/Products" section.
     * **Deliverable:** Screenshots of UI for the report.
 
