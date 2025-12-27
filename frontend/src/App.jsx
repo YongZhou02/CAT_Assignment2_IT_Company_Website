@@ -1,23 +1,28 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Team from './components/Team';
+import Home from './pages/Home';
+import Games from './pages/Games';
+import Studio from './pages/Studio';
+import Team from './pages/Team';
 import Footer from './components/Footer';
 
 function App() {
     return (
-        <div className="font-sans text-gray-900 antialiased">
-            <Navbar />
-            <main>
-                <Hero />
-                <About />
-                <Services />
-                <Team />
-            </main>
-            <Footer />
-        </div>
+        <Router>
+            <div className="font-sans text-gray-100 bg-black min-h-screen flex flex-col">
+                <Navbar />
+                <main className="flex-grow">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/games" element={<Games />} />
+                        <Route path="/studio" element={<Studio />} />
+                        <Route path="/team" element={<Team />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+        </Router>
     );
 }
 
