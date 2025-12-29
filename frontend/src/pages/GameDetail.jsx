@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getGameById } from '../data/gamesData';
 
@@ -6,6 +6,12 @@ const GameDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const game = getGameById(id);
+
+    // Scroll to top when page loads
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
+
 
     // Handle game not found
     if (!game) {
@@ -47,14 +53,14 @@ const GameDetail = () => {
 
     return (
         <div className="bg-black min-h-screen pt-20">
-            {/* Hero Image */}
-            <div className="relative h-[50vh] overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
-                <img
-                    src={game.image}
-                    alt={game.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+            {/* Hero Image as Background */}
+            <div
+                className="relative h-[70vh] overflow-hidden group bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${game.image})` }}
+            >
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black z-10"></div>
+
                 {/* Genre Badge */}
                 <div className="absolute top-8 right-8 z-20">
                     <span className={`bg-black/80 backdrop-blur ${game.color} text-sm font-bold px-4 py-2 rounded-full uppercase tracking-wider border ${game.borderColor} transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-default`}>

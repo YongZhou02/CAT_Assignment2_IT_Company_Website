@@ -18,7 +18,7 @@ export const gamesData = [
         releaseDate: "Q2 2025",
         platforms: ["PC", "PlayStation 5", "Xbox Series X"],
         rating: 4.8,
-        image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80",
+        image: "/neon_drifter.png",
         color: "text-purple-400",
         borderColor: "border-purple-500",
         glowColor: "shadow-purple-500/30"
@@ -84,10 +84,98 @@ export const gamesData = [
         releaseDate: "Q3 2025",
         platforms: ["PC", "PlayStation 5", "Xbox Series X"],
         rating: 4.6,
-        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-4.0.3&auto=format&fit=crop&w=1287&q=80",
+        image: "/cyber_katana.png",
         color: "text-pink-500",
         borderColor: "border-pink-500",
         glowColor: "shadow-pink-500/30"
+    },
+    {
+        id: 5,
+        title: "Shadow Protocol",
+        genre: "Tactical Stealth",
+        tagline: "Unseen. Unheard. Unstoppable.",
+        shortDescription: "Infiltrate the world's most secure facilities as an elite ghost operative. Plan your approach, execute flawlessly, leave no trace.",
+        longDescription: "Shadow Protocol puts you in the role of Agent Zero, a highly trained operative working for a clandestine organization. Each mission is a puzzle box of security systems, patrol routes, and environmental hazards. Use cutting-edge gadgets, social engineering, and lethal precision to complete objectives your way—whether that means slipping through undetected or eliminating every witness.",
+        features: [
+            "Open-ended mission design with multiple approaches",
+            "Advanced AI with realistic patrol patterns",
+            "Extensive gadget and loadout customization",
+            "Co-op mode for tactical team operations",
+            "Procedurally generated side missions"
+        ],
+        releaseDate: "Q2 2026",
+        platforms: ["PC", "PlayStation 5", "Xbox Series X"],
+        rating: 4.5,
+        image: "/shadow_protocol.png",
+        color: "text-gray-400",
+        borderColor: "border-gray-500",
+        glowColor: "shadow-gray-500/30"
+    },
+    {
+        id: 6,
+        title: "Mythfall",
+        genre: "Fantasy MMORPG",
+        tagline: "Legends are born in battle.",
+        shortDescription: "Enter a sprawling fantasy realm where gods walk among mortals. Forge alliances, master ancient magic, and carve your legend.",
+        longDescription: "Mythfall is a next-generation MMORPG set in a world where the barrier between the mortal realm and the divine has shattered. Choose from eight unique races and twelve classes, each with deep skill trees and playstyles. Participate in massive 100v100 siege battles, explore procedurally generated dungeons, or simply live a peaceful life as a crafter. Your story, your way.",
+        features: [
+            "Massive persistent world with dynamic events",
+            "Eight playable races and twelve classes",
+            "Player-driven economy and housing system",
+            "Epic raid content for up to 40 players",
+            "Cross-platform play between PC and consoles"
+        ],
+        releaseDate: "Q4 2026",
+        platforms: ["PC", "PlayStation 5", "Xbox Series X"],
+        rating: 4.8,
+        image: "/mythfall.png",
+        color: "text-amber-400",
+        borderColor: "border-amber-500",
+        glowColor: "shadow-amber-500/30"
+    },
+    {
+        id: 7,
+        title: "Quantum Rift",
+        genre: "Sci-Fi Shooter",
+        tagline: "Reality is just a variable.",
+        shortDescription: "Wield experimental weapons that manipulate the fabric of spacetime. Bend reality to defeat an interdimensional invasion.",
+        longDescription: "In Quantum Rift, you are one of the few survivors of a catastrophic experiment that tore holes in reality. Armed with prototype weapons capable of manipulating gravity, time, and dimensional barriers, fight through hordes of creatures from parallel universes. Master the Rift abilities to create tactical advantages—slow time, reverse gravity, or phase through walls to outmaneuver your enemies.",
+        features: [
+            "Innovative reality-bending combat mechanics",
+            "Interconnected world with Metroidvania exploration",
+            "Upgrade system with over 200 weapon mods",
+            "Intense boss battles against dimensional titans",
+            "New Game+ with alternate reality modifiers"
+        ],
+        releaseDate: "Q1 2025",
+        platforms: ["PC", "PlayStation 5", "Xbox Series X", "Nintendo Switch"],
+        rating: 4.7,
+        image: "/quantum_rift.png",
+        color: "text-blue-400",
+        borderColor: "border-blue-500",
+        glowColor: "shadow-blue-500/30"
+    },
+    {
+        id: 8,
+        title: "Hollow Deep",
+        genre: "Horror Survival",
+        tagline: "In the abyss, no one can hear you scream.",
+        shortDescription: "Descend into an abandoned deep-sea research facility where something ancient has awakened. Survive the crushing darkness.",
+        longDescription: "Hollow Deep is a atmospheric horror experience set in the Marianas Research Station, a facility that went dark after drilling into an unexplored oceanic trench. As a rescue team member, navigate flooded corridors, manage your oxygen supply, and uncover the horrifying truth of what the researchers found below. The pressure is constant, resources are scarce, and you are never truly alone.",
+        features: [
+            "Immersive underwater horror atmosphere",
+            "Resource management and survival mechanics",
+            "Sanity system affected by isolation and encounters",
+            "Multiple endings based on player choices",
+            "VR support for maximum immersion"
+        ],
+        releaseDate: "Q3 2025",
+        platforms: ["PC", "PlayStation 5"],
+        rating: 4.4,
+        image: "/hollow_deep.png",
+        color: "text-teal-400",
+        borderColor: "border-teal-500",
+        glowColor: "shadow-teal-500/30"
     }
 ];
 
