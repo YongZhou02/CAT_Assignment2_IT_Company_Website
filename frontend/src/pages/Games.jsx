@@ -1,45 +1,9 @@
 import React from 'react';
-
-const games = [
-    {
-        id: 1,
-        title: "Neon Drifter",
-        genre: "Cyberpunk Racing",
-        description: "Tear through the neon-drenched streets of Neo-Tokyo. customize your ride, outrun the corp enforcers, and race to the beat of a synthwave soundtrack.",
-        image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80",
-        color: "text-purple-400",
-        border: "hover:border-purple-500"
-    },
-    {
-        id: 2,
-        title: "StarForge",
-        genre: "Space Simulation",
-        description: "Command a fleet, build stations, and forge an empire among the stars. A procedurally generated universe awaits your exploration and conquest.",
-        image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", // Space theme
-        color: "text-cyan-400",
-        border: "hover:border-cyan-500"
-    },
-    {
-        id: 3,
-        title: "Echoes of Time",
-        genre: "Narrative RPG",
-        description: "A time-bending RPG where every choice ripples across three distinct timelines. Save the past to secure your future.",
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=1668&q=80", // Abstract/Time theme
-        color: "text-emerald-400",
-        border: "hover:border-emerald-500"
-    },
-    {
-        id: 4,
-        title: "Cyber-Katana",
-        genre: "Hack & Slash",
-        description: "Vanquish robotic hordes with high-frequency blades. Master the art of the parry in this punishingly difficult action game.",
-        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-4.0.3&auto=format&fit=crop&w=1287&q=80", // Dark/Action theme
-        color: "text-pink-500",
-        border: "hover:border-pink-500"
-    }
-];
+import { Link } from 'react-router-dom';
+import { gamesData } from '../data/gamesData';
 
 const Games = () => {
+    const games = gamesData;
     return (
         <div className="bg-black min-h-screen pt-24 pb-20 px-6">
             <div className="max-w-7xl mx-auto">
@@ -54,9 +18,10 @@ const Games = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     {games.map((game) => (
-                        <div
+                        <Link
                             key={game.id}
-                            className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 ${game.border} hover:shadow-2xl hover:shadow-${game.color.split('-')[1]}-500/20`}
+                            to={`/games/${game.id}`}
+                            className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 hover:${game.borderColor} hover:shadow-2xl ${game.glowColor} cursor-pointer block`}
                         >
                             {/* Image Container */}
                             <div className="h-64 overflow-hidden relative">
@@ -79,16 +44,16 @@ const Games = () => {
                                     {game.title}
                                 </h3>
                                 <p className="text-gray-400 mb-6 leading-relaxed">
-                                    {game.description}
+                                    {game.shortDescription}
                                 </p>
-                                <button className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors">
+                                <span className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors">
                                     Learn More
                                     <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </button>
+                                </span>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
