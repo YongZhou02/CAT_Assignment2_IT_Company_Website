@@ -48,8 +48,16 @@ const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <div className="flex items-center">
-                        <a href="#home" className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500 hover:scale-105 transition-transform">
-                            PIXELFORGE
+                        <a href="#home" className="flex items-center gap-3 hover:scale-105 transition-transform group">
+                            <img
+                                src="/logo.png"
+                                alt="PixelForge Logo"
+                                className="h-10 auto object-contain rounded-lg drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]"
+                            />
+
+                            <span className="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                                PIXELFORGE
+                            </span>
                         </a>
                     </div>
 
