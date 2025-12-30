@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { gamesData } from '../data/gamesData';
 
 const Games = () => {
@@ -18,10 +17,10 @@ const Games = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     {games.map((game) => (
-                        <Link
+                        // 2. 把 <Link> 改成了 <div>，并删掉了 to="..."
+                        <div
                             key={game.id}
-                            to={`/games/${game.id}`}
-                            className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 hover:${game.borderColor} hover:shadow-2xl ${game.glowColor} cursor-pointer block`}
+                            className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 hover:${game.borderColor} hover:shadow-2xl ${game.glowColor} block`}
                         >
                             {/* Image Container */}
                             <div className="h-64 overflow-hidden relative">
@@ -46,14 +45,14 @@ const Games = () => {
                                 <p className="text-gray-400 mb-6 leading-relaxed">
                                     {game.shortDescription}
                                 </p>
-                                <span className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors">
+                                <span className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors cursor-default">
                                     Learn More
                                     <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </span>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>
