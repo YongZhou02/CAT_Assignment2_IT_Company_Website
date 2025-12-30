@@ -4,7 +4,7 @@ import { gamesData } from '../data/gamesData';
 const Games = () => {
     const games = gamesData;
     return (
-        <div className="bg-black min-h-screen pt-24 pb-20 px-6">
+        <div className="bg-black w-full py-24 pt-24 pb-20 px-6">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-cyan-500 mb-4">

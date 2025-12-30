@@ -4,7 +4,7 @@ const Studio = () => {
     const canvasRef = useRef(null);
 
     // Galaxy/Starfield Animation
-    useEffect(() => {
+useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -14,20 +14,20 @@ const Studio = () => {
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
-            canvas.height = document.documentElement.scrollHeight;
+            canvas.height = window.innerHeight;
         };
 
         const createStars = () => {
             stars = [];
-            const numStars = Math.floor((canvas.width * canvas.height) / 8000);
+            const numStars = Math.floor((canvas.width * canvas.height) / 4000);
 
             for (let i = 0; i < numStars; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5,
-                    speedX: (Math.random() - 0.5) * 0.3,
-                    speedY: Math.random() * 0.2 + 0.1,
+                    size: Math.random() * 2 + 0.5, // 星星大小
+                    speedX: (Math.random() - 0.5) * 0.2, // 稍微减慢速度，更优雅
+                    speedY: Math.random() * 0.1 + 0.05,
                     opacity: Math.random() * 0.8 + 0.2,
                     twinkleSpeed: Math.random() * 0.02 + 0.01,
                     twinklePhase: Math.random() * Math.PI * 2,
@@ -44,12 +44,11 @@ const Studio = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             stars.forEach(star => {
-                // Update position
                 star.x += star.speedX;
                 star.y += star.speedY;
                 star.twinklePhase += star.twinkleSpeed;
 
-                // Wrap around screen
+                // Wrap around screen (星星跑出屏幕后，从另一边回来)
                 if (star.y > canvas.height) {
                     star.y = 0;
                     star.x = Math.random() * canvas.width;
@@ -57,17 +56,14 @@ const Studio = () => {
                 if (star.x < 0) star.x = canvas.width;
                 if (star.x > canvas.width) star.x = 0;
 
-                // Twinkle effect
                 const twinkle = Math.sin(star.twinklePhase) * 0.3 + 0.7;
                 const currentOpacity = star.opacity * twinkle;
 
-                // Draw star with glow
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
                 ctx.fillStyle = star.color + currentOpacity + ')';
                 ctx.fill();
 
-                // Add glow for larger stars
                 if (star.size > 1.5) {
                     ctx.beginPath();
                     ctx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
@@ -118,7 +114,7 @@ const Studio = () => {
     ];
 
     return (
-        <div className="bg-black min-h-screen pt-20 relative overflow-hidden">
+        <div className="bg-black w-full py-24 pt-20 relative overflow-hidden">
             {/* Animated Galaxy Background */}
             <canvas
                 ref={canvasRef}

@@ -32,7 +32,7 @@ const Team = () => {
     ];
 
     return (
-        <div className="bg-black min-h-screen pt-24 pb-20 px-6">
+        <div className="bg-black w-full py-24 pt-24 pb-20 px-6">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h1 className="text-5xl font-bold text-white mb-4">
