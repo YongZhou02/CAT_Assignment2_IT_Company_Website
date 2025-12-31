@@ -5,7 +5,7 @@ import Games from './pages/Games';
 import Studio from './pages/Studio';
 import Team from './pages/Team';
 import Footer from './components/Footer';
-import RevealOnScroll from './components/RevealOnScroll'; // 1. 引入这个组件
+import RevealOnScroll from './components/RevealOnScroll';
 
 function App() {
     return (
@@ -13,26 +13,26 @@ function App() {
             <Navbar />
 
             <main className="flex-grow">
-                {/* Home 通常不需要滚动动画，因为它一进来就在那里 */}
+                {/* Home section - no scroll animation needed as it's visible on load */}
                 <section id="home">
                     <Home />
                 </section>
 
-                {/* 给 Games 套上魔法斗篷 */}
+                {/* Games section with scroll reveal animation */}
                 <section id="games">
                     <RevealOnScroll>
                         <Games />
                     </RevealOnScroll>
                 </section>
 
-                {/* 给 Studio 套上魔法斗篷 */}
+                {/* Studio section with scroll reveal animation */}
                 <section id="studio">
                     <RevealOnScroll>
                         <Studio />
                     </RevealOnScroll>
                 </section>
 
-                {/* 给 Team 套上魔法斗篷 */}
+                {/* Team section with scroll reveal animation */}
                 <section id="team">
                     <RevealOnScroll>
                         <Team />

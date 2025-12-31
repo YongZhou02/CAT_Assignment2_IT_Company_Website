@@ -1,4 +1,4 @@
-// Central data file for all games - used by Games.jsx and GameDetail.jsx
+// Central data file for all games - used by Games.jsx
 
 export const gamesData = [
     {
@@ -178,8 +178,3 @@ export const gamesData = [
         glowColor: "shadow-teal-500/30"
     }
 ];
-
-// Helper function to get a game by ID
-export const getGameById = (id) => {
-    return gamesData.find(game => game.id === parseInt(id));
-};

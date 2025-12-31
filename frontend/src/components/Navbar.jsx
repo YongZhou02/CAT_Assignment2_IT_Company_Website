@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home'); // 默认激活 'home'
+    const [activeSection, setActiveSection] = useState('home'); // Default active section
 
-    // 监听滚动事件
+    // Listen for scroll events
     useEffect(() => {
         const handleScroll = () => {
-            // 获取所有板块的 ID
+            // Get all section IDs
             const sections = ['home', 'games', 'studio', 'team'];
 
-            // 获取当前滚动条的位置 (加 100px 是为了让切换更灵敏一点)
+            // Get current scroll position (add 100px for more responsive switching)
             const scrollPosition = window.scrollY + 100;
 
-            // 循环检查每个板块
+            // Loop through each section
             for (const section of sections) {
                 const element = document.getElementById(section);
                 if (element) {
-                    // 如果滚动条位置 > 这个板块的顶部位置，就激活它
+                    // If scroll position > section top position, activate it
                     const offsetTop = element.offsetTop;
                     const offsetHeight = element.offsetHeight;
 
@@ -28,16 +28,16 @@ const Navbar = () => {
             }
         };
 
-        // 添加监听器
+        // Add listener
         window.addEventListener('scroll', handleScroll);
-        // 清理监听器 (防止内存泄漏)
+        // Cleanup listener (prevent memory leak)
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const getNavLinkClass = (sectionName) => {
         const baseClass = "px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 cursor-pointer";
-        const activeClass = "text-cyan-400 font-bold scale-110 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"; // 激活时的样式 (发光 + 变大)
-        const inactiveClass = "text-gray-400 hover:text-white hover:bg-gray-800"; // 未激活时的样式
+        const activeClass = "text-cyan-400 font-bold scale-110 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"; // Active style (glow + scale)
+        const inactiveClass = "text-gray-400 hover:text-white hover:bg-gray-800"; // Inactive style
 
         return `${baseClass} ${activeSection === sectionName ? activeClass : inactiveClass}`;
     };
@@ -61,7 +61,7 @@ const Navbar = () => {
                         </a>
                     </div>
 
-                    {/* Desktop Menu (电脑端菜单) */}
+                    {/* Desktop Menu */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-8">
                             <a href="#home" className={getNavLinkClass('home')}>Home</a>
@@ -71,7 +71,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Mobile Menu Button (手机端菜单按钮) */}
+                    {/* Mobile Menu Button */}
                     <div className="-mr-2 flex md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -93,7 +93,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu (手机端菜单) */}
+            {/* Mobile Menu */}
             {isOpen && (
                 <div className="md:hidden bg-gray-900 border-b border-gray-800">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

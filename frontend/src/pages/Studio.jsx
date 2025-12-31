@@ -4,7 +4,7 @@ const Studio = () => {
     const canvasRef = useRef(null);
 
     // Galaxy/Starfield Animation
-useEffect(() => {
+    useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -25,8 +25,8 @@ useEffect(() => {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5, // 星星大小
-                    speedX: (Math.random() - 0.5) * 0.2, // 稍微减慢速度，更优雅
+                    size: Math.random() * 2 + 0.5, // Star size
+                    speedX: (Math.random() - 0.5) * 0.2, // Slightly slower for elegance
                     speedY: Math.random() * 0.1 + 0.05,
                     opacity: Math.random() * 0.8 + 0.2,
                     twinkleSpeed: Math.random() * 0.02 + 0.01,
@@ -48,7 +48,7 @@ useEffect(() => {
                 star.y += star.speedY;
                 star.twinklePhase += star.twinkleSpeed;
 
-                // Wrap around screen (星星跑出屏幕后，从另一边回来)
+                // Wrap around screen (stars reappear on the opposite side)
                 if (star.y > canvas.height) {
                     star.y = 0;
                     star.x = Math.random() * canvas.width;
