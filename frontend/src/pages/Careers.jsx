@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom'; // ✨ 引入 ReactDOM
 import { Link } from 'react-router-dom';
-import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
+import RevealOnScroll from '../components/RevealOnScroll';
 
 // 👇 1. Toast 组件 (保持不变)
 const Toast = ({ message, onClose }) => {
@@ -12,7 +13,7 @@ const Toast = ({ message, onClose }) => {
     }, [onClose]);
 
     return (
-        <div className="fixed bottom-5 right-5 z-[100] flex items-center gap-3 bg-gray-900 border border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.3)] text-white px-6 py-4 rounded-xl animate-bounce-in">
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.3)] text-white px-6 py-4 rounded-xl animate-bounce-in">
             <div className="bg-green-500/20 p-2 rounded-full">
                 <svg className="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -159,10 +160,8 @@ const Careers = () => {
     return (
         <div className="bg-transparent min-h-screen text-white pt-24 pb-20 px-6 relative">
 
-            {toast && <Toast message={toast} onClose={() => setToast(null)} />}
-
             <div className="max-w-5xl mx-auto">
-                {/* ✨ Header Animation */}
+                {/* Header Animation */}
                 <RevealOnScroll variant="fade-up">
                     <div className="text-center mb-16">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -177,7 +176,6 @@ const Careers = () => {
                 {/* Job List with Staggered Animation */}
                 <div className="grid gap-6">
                     {jobs.map((job, index) => (
-                        // ✨ 列表项动画：加上 delay
                         <RevealOnScroll key={job.id} variant="fade-up" delay={index * 150}>
                             <div className="bg-gray-900/50 border border-gray-800 p-8 rounded-2xl hover:border-cyan-500 transition-all duration-300 group hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]">
                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -204,7 +202,7 @@ const Careers = () => {
                     ))}
                 </div>
 
-                {/* ✨ Footer Section Animation */}
+                {/* Footer Section Animation */}
                 <RevealOnScroll variant="fade-up" delay={200}>
                     <div className="mt-16 text-center bg-gradient-to-r from-gray-900 to-gray-800 p-10 rounded-2xl border border-gray-700">
                         <h3 className="text-2xl font-bold mb-4">Don't see your role?</h3>
@@ -221,9 +219,15 @@ const Careers = () => {
                 </RevealOnScroll>
             </div>
 
-            {/* JD Modal (No changes needed, modals handle their own animations usually via CSS or just appear) */}
-            {viewingJob && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+            {/* ✨ 使用 Portal 将 Toast 渲染到 document.body (解决 z-index 问题) */}
+            {toast && ReactDOM.createPortal(
+                <Toast message={toast} onClose={() => setToast(null)} />,
+                document.body
+            )}
+
+            {/* ✨ 使用 Portal 将 JD Modal 渲染到 document.body */}
+            {viewingJob && ReactDOM.createPortal(
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
                     <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
                         <div className="p-8 border-b border-gray-800 sticky top-0 bg-gray-900/95 backdrop-blur z-10 flex justify-between items-start">
                             <div>
@@ -289,12 +293,13 @@ const Careers = () => {
                             <button onClick={handleApplyFromDetails} className="px-8 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold hover:from-purple-500 hover:to-cyan-500 shadow-lg hover:shadow-purple-500/20 transition-all">Apply for this Role</button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
-            {/* Application Modal */}
-            {applyingJob && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+            {/* ✨ 使用 Portal 将 Application Form Modal 渲染到 document.body */}
+            {applyingJob && ReactDOM.createPortal(
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
                     <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-lg shadow-2xl relative">
                         <div className="p-6 border-b border-gray-800 flex justify-between items-center">
                             <div>
@@ -320,7 +325,6 @@ const Careers = () => {
                                 <input type="url" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" placeholder="https://..." />
                             </div>
 
-                            {/* File Upload Area */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">Resume / CV</label>
                                 <input
@@ -389,7 +393,8 @@ const Careers = () => {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
