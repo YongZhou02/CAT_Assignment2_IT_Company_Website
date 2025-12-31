@@ -1,5 +1,5 @@
 import React from 'react';
-// 注意：删掉了 import { Link } ...
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -20,10 +20,12 @@ const Footer = () => {
                     <div>
                         <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
                         <ul className="space-y-2">
-                            <li><a href="#home" className="text-gray-400 hover:text-cyan-400 transition duration-300">Home</a></li>
-                            <li><a href="#games" className="text-gray-400 hover:text-cyan-400 transition duration-300">Games</a></li>
-                            <li><a href="#studio" className="text-gray-400 hover:text-purple-400 transition duration-300">Studio</a></li>
-                            <li><a href="#team" className="text-gray-400 hover:text-purple-400 transition duration-300">Team</a></li>
+                            <li><Link to="/" className="text-gray-400 hover:text-cyan-400 transition duration-300">Home</Link></li>
+                            <li><Link to="/games" className="text-gray-400 hover:text-cyan-400 transition duration-300">Games</Link></li>
+                            <li><Link to="/studio" className="text-gray-400 hover:text-purple-400 transition duration-300">Studio</Link></li>
+                            <li><Link to="/team" className="text-gray-400 hover:text-purple-400 transition duration-300">Team</Link></li>
+                            <li><Link to="/careers" className="text-gray-400 hover:text-cyan-400 transition duration-300">Join Us</Link></li>
+                            <li><Link to="/faq" className="text-gray-400 hover:text-cyan-400 transition duration-300">FAQ</Link></li>
                         </ul>
                     </div>
 
@@ -31,9 +33,9 @@ const Footer = () => {
                     <div>
                         <h3 className="text-xl font-bold mb-4 text-white">Contact Base</h3>
                         <ul className="space-y-2 text-gray-400">
-                            <li>📍 Level 99, The Glitch Tower</li>
+                            <li>📍 11800 USM Penang, Malaysia</li>
                             <li>📧 contact@pixelforge.games</li>
-                            <li>📞 +1 (800) GAME-DEV</li>
+                            <li>📞 +1 (800) 88 8888</li>
                         </ul>
                     </div>
                 </div>

@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const RevealOnScroll = ({ children }) => {
+const RevealOnScroll = ({ children, variant = "fade-up", delay = 0 }) => {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                // Key: directly set isVisible based on isIntersecting
-                // When scrolling away (leaving screen), it becomes false (hidden)
-                // When scrolling back (entering screen), it becomes true (visible)
-                setIsVisible(entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.unobserve(entry.target); // 动画只播放一次，往回滚不会消失
+                }
             },
             {
-                threshold: 0.05, // Lower threshold for mobile - 5% visible triggers animation
-                rootMargin: "0px 0px" // No offset for better mobile compatibility
+                threshold: 0.1, // 只要出现 10% 就触发
+                rootMargin: "0px 0px -50px 0px" // 稍微往上一点才触发，体验更好
             }
         );
 
@@ -29,16 +29,25 @@ const RevealOnScroll = ({ children }) => {
         };
     }, []);
 
-    // Animation logic:
-    // Hidden: opacity 0, shifted down (translate-y-24)
-    // Visible: opacity 1, normal position
-    const classes = `transition-all duration-1000 ease-out transform ${isVisible
-        ? 'opacity-100 translate-y-0 blur-none'
-        : 'opacity-0 translate-y-16 blur-sm' // Reduced translate for mobile
-        }`;
+    // 定义不同的动画样式
+    const variants = {
+        "fade-up": isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20",
+        "slide-left": isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20", // 从左边飞进来
+        "slide-right": isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20", // 从右边飞进来
+        "zoom-in": isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90", // 从小变大
+    };
+
+    // 延迟样式的构建
+    const transitionDelay = delay ? `delay-[${delay}ms]` : "";
+    // 注意：Tailwind 动态 class 有时需要 safelist，简单的可以直接用 style
+    const styleDelay = { transitionDelay: `${delay}ms` };
 
     return (
-        <div ref={ref} className={classes}>
+        <div
+            ref={ref}
+            style={styleDelay}
+            className={`transition-all duration-1000 ease-out transform ${variants[variant] || variants["fade-up"]}`}
+        >
             {children}
         </div>
     );

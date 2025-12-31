@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { gamesData } from '../data/gamesData';
+import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
 
 const Games = () => {
     const games = gamesData;
@@ -37,63 +38,106 @@ const Games = () => {
     };
 
     return (
-        <div className="bg-black w-full py-24 pt-24 pb-20 px-6">
+        <div className="bg-transparent w-full py-24 pt-24 pb-20 px-6">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-cyan-500 mb-4">
-                        Our Creations
-                    </h1>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                        Explore the worlds we've built. From the neon streets to the furthest stars, adventure awaits.
-                    </p>
-                </div>
+                {/* Header Animation */}
+                <RevealOnScroll variant="fade-up">
+                    <div className="text-center mb-16">
+                        <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-cyan-500 mb-4">
+                            Our Creations
+                        </h1>
+                        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                            Explore the worlds we've built. From the neon streets to the furthest stars, adventure awaits.
+                        </p>
+                    </div>
+                </RevealOnScroll>
 
+                {/* Games Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    {games.map((game) => (
-                        <div
-                            key={game.id}
-                            onClick={() => openModal(game)}
-                            className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 hover:${game.borderColor} hover:shadow-2xl ${game.glowColor} block cursor-pointer`}
-                        >
-                            {/* Image Container */}
-                            <div className="h-64 overflow-hidden relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent z-10 opacity-60"></div>
-                                <img
-                                    src={game.image}
-                                    alt={game.title}
-                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                />
-                                <div className="absolute top-4 right-4 z-20">
-                                    <span className="bg-black/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-gray-700">
-                                        {game.genre}
+                    {games.map((game, index) => (
+                        // ✨ 重点：在这里加上 RevealOnScroll，并使用 index 来控制延迟
+                        // index * 100 意味着：第一个延迟0ms，第二个100ms，第三个200ms... 形成波浪效果
+                        <RevealOnScroll key={game.id} delay={index * 100} variant="fade-up">
+                            <div
+                                onClick={() => openModal(game)}
+                                className={`group relative bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 hover:${game.borderColor} hover:shadow-2xl ${game.glowColor} block cursor-pointer h-full`}
+
+                                // Video Preview Logic
+                                onMouseEnter={(e) => {
+                                    if (game.videoPreview) {
+                                        const video = e.currentTarget.querySelector('video');
+                                        if (video) video.play();
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (game.videoPreview) {
+                                        const video = e.currentTarget.querySelector('video');
+                                        if (video) {
+                                            video.pause();
+                                            video.currentTime = 0;
+                                        }
+                                    }
+                                }}
+                            >
+                                {/* Image Container */}
+                                <div className="h-64 overflow-hidden relative">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent z-10 opacity-60"></div>
+
+                                    {/* Image Logic: Hide on hover ONLY if video exists */}
+                                    <img
+                                        src={game.image}
+                                        alt={game.title}
+                                        className={`w-full h-full object-cover transform transition-all duration-700
+                                            ${game.videoPreview
+                                                ? 'group-hover:scale-110 group-hover:opacity-0'
+                                                : 'group-hover:scale-110'
+                                            }
+                                        `}
+                                    />
+
+                                    {/* Video Element */}
+                                    {game.videoPreview && (
+                                        <video
+                                            src={game.videoPreview}
+                                            muted
+                                            loop
+                                            playsInline
+                                            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        />
+                                    )}
+
+                                    <div className="absolute top-4 right-4 z-20">
+                                        <span className="bg-black/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-gray-700">
+                                            {game.genre}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="p-8">
+                                    <h3 className={`text-3xl font-bold mb-3 ${game.color} group-hover:text-white transition-colors`}>
+                                        {game.title}
+                                    </h3>
+                                    <p className="text-gray-400 mb-6 leading-relaxed">
+                                        {game.shortDescription}
+                                    </p>
+                                    <span className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white group-hover:text-cyan-400 transition-colors">
+                                        Learn More
+                                        <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
                                     </span>
                                 </div>
                             </div>
-
-                            {/* Content */}
-                            <div className="p-8">
-                                <h3 className={`text-3xl font-bold mb-3 ${game.color} group-hover:text-white transition-colors`}>
-                                    {game.title}
-                                </h3>
-                                <p className="text-gray-400 mb-6 leading-relaxed">
-                                    {game.shortDescription}
-                                </p>
-                                <span className="inline-flex items-center text-sm font-bold uppercase tracking-widest text-white group-hover:text-cyan-400 transition-colors">
-                                    Learn More
-                                    <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
+                        </RevealOnScroll>
                     ))}
                 </div>
             </div>
 
-            {/* Modal Overlay - Using Portal to escape parent transforms */}
+            {/* Modal Overlay - No Scroll Animation needed for modal itself */}
             {selectedGame && ReactDOM.createPortal(
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn"
                     onClick={closeModal}
                 >
                     {/* Modal Content */}
@@ -111,14 +155,26 @@ const Games = () => {
                             </svg>
                         </button>
 
-                        {/* Hero Image */}
+                        {/* Hero Image / Video Logic for Modal */}
                         <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl">
                             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900 z-10"></div>
-                            <img
-                                src={selectedGame.image}
-                                alt={selectedGame.title}
-                                className="w-full h-full object-cover"
-                            />
+
+                            {selectedGame.videoPreview ? (
+                                <video
+                                    src={selectedGame.videoPreview}
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <img
+                                    src={selectedGame.image}
+                                    alt={selectedGame.title}
+                                    className="w-full h-full object-cover"
+                                />
+                            )}
                             <div className="absolute top-4 left-4 z-20">
                                 <span className={`bg-black/80 backdrop-blur ${selectedGame.color} text-sm font-bold px-4 py-2 rounded-full uppercase tracking-wider border ${selectedGame.borderColor} transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-default ${selectedGame.glowColor}`}>
                                     {selectedGame.genre}

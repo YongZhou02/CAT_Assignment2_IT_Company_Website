@@ -19,6 +19,7 @@ export const gamesData = [
         platforms: ["PC", "PlayStation 5", "Xbox Series X"],
         rating: 4.8,
         image: "/neon_drifter.png",
+        videoPreview: "/videos/neondrifter.mp4",
         color: "text-purple-400",
         borderColor: "border-purple-500",
         glowColor: "shadow-purple-500/30"
@@ -40,7 +41,7 @@ export const gamesData = [
         releaseDate: "Q4 2025",
         platforms: ["PC", "Mac"],
         rating: 4.9,
-        image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        image: "/starforge.jpg",
         color: "text-cyan-400",
         borderColor: "border-cyan-500",
         glowColor: "shadow-cyan-500/30"
@@ -62,7 +63,7 @@ export const gamesData = [
         releaseDate: "Q1 2026",
         platforms: ["PC", "Nintendo Switch", "PlayStation 5", "Xbox Series X"],
         rating: 4.7,
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=1668&q=80",
+        image: "/echoes_of_time.png",
         color: "text-emerald-400",
         borderColor: "border-emerald-500",
         glowColor: "shadow-emerald-500/30"
@@ -85,6 +86,7 @@ export const gamesData = [
         platforms: ["PC", "PlayStation 5", "Xbox Series X"],
         rating: 4.6,
         image: "/cyber_katana.png",
+        videoPreview: "/videos/cyberkatana.mp4",
         color: "text-pink-500",
         borderColor: "border-pink-500",
         glowColor: "shadow-pink-500/30"
@@ -107,6 +109,7 @@ export const gamesData = [
         platforms: ["PC", "PlayStation 5", "Xbox Series X"],
         rating: 4.5,
         image: "/shadow_protocol.png",
+        videoPreview: "/videos/shadowprotocol.mp4",
         color: "text-gray-400",
         borderColor: "border-gray-500",
         glowColor: "shadow-gray-500/30"
@@ -151,6 +154,7 @@ export const gamesData = [
         platforms: ["PC", "PlayStation 5", "Xbox Series X", "Nintendo Switch"],
         rating: 4.7,
         image: "/quantum_rift.png",
+        videoPreview: "/videos/quantumrift.mp4",
         color: "text-blue-400",
         borderColor: "border-blue-500",
         glowColor: "shadow-blue-500/30"
@@ -173,6 +177,7 @@ export const gamesData = [
         platforms: ["PC", "PlayStation 5"],
         rating: 4.4,
         image: "/hollow_deep.png",
+        videoPreview: "/videos/hollowdeep.mp4",
         color: "text-teal-400",
         borderColor: "border-teal-500",
         glowColor: "shadow-teal-500/30"
