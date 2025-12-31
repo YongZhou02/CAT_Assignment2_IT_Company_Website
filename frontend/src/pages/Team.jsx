@@ -8,7 +8,7 @@ const Team = () => {
             name: "Lim Yong Zhou",
             role: "Lead Developer & Architect",
             bio: "Master of code. Converting caffeine into complex game mechanics and bug-free systems.",
-            image: "/limyongzhou.jpg",
+            image: "/limyongzhou.png",
             color: "text-purple-500",
             border: "hover:border-purple-500"
         },
