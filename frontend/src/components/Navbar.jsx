@@ -36,7 +36,7 @@ const Navbar = () => {
 
     const getNavLinkClass = (sectionName) => {
         const baseClass = "px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 cursor-pointer";
-        const activeClass = "text-cyan-400 font-bold scale-110 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"; // Active style (glow + scale)
+        const activeClass = "text-cyan-400 font-bold drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"; // Active style (glow only, no scale for mobile)
         const inactiveClass = "text-gray-400 hover:text-white hover:bg-gray-800"; // Inactive style
 
         return `${baseClass} ${activeSection === sectionName ? activeClass : inactiveClass}`;
@@ -96,7 +96,7 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="md:hidden bg-gray-900 border-b border-gray-800">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <div className="px-4 pt-2 pb-3 space-y-1 sm:px-4">
                         <a href="#home" onClick={() => setIsOpen(false)} className={`block ${getNavLinkClass('home')}`}>Home</a>
                         <a href="#games" onClick={() => setIsOpen(false)} className={`block ${getNavLinkClass('games')}`}>Games</a>
                         <a href="#studio" onClick={() => setIsOpen(false)} className={`block ${getNavLinkClass('studio')}`}>Studio</a>
