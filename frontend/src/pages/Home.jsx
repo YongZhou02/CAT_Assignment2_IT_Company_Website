@@ -1,28 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // ✨ 1. 引入 useRef
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
+import RevealOnScroll from '../components/RevealOnScroll';
+import emailjs from '@emailjs/browser'; // ✨ 2. 引入 EmailJS
+
+// 👇 Toast 组件 (稍微升级一下，支持显示错误红色)
+const Toast = ({ message, type, onClose }) => {
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            onClose();
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, [onClose]);
+
+    // 根据类型决定颜色 (success=绿, error=红)
+    const isError = type === 'error';
+    const borderColor = isError ? 'border-red-500/50' : 'border-green-500/50';
+    const shadowColor = isError ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'shadow-[0_0_15px_rgba(34,197,94,0.3)]';
+    const textColor = isError ? 'text-red-400' : 'text-green-400';
+    const bgColor = isError ? 'bg-red-500/20' : 'bg-green-500/20';
+
+    return (
+        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border ${borderColor} ${shadowColor} text-white px-6 py-4 rounded-xl animate-bounce-in`}>
+            <div className={`${bgColor} p-2 rounded-full`}>
+                {isError ? (
+                    <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                ) : (
+                    <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                )}
+            </div>
+            <div>
+                <h4 className={`font-bold ${textColor}`}>{isError ? 'Error' : 'Success!'}</h4>
+                <p className="text-sm text-gray-300">{message}</p>
+            </div>
+        </div>
+    );
+};
 
 const Home = () => {
-  // 简单的表单状态
+  const formRef = useRef(); // ✨ 3. 创建 ref 用于获取表单内容
+
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Toast 状态改为对象，包含消息和类型
+  const [toast, setToast] = useState(null);
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message sent! (Simulation)"); // 模拟发送
+    setIsSubmitting(true);
+
+    // ✨ 4. EmailJS 配置 (请填入你自己的 ID)
+    // 去 EmailJS 官网 -> Account / Email Services / Email Templates 找这些 ID
+    const SERVICE_ID = "service_blwprns";
+    const TEMPLATE_ID = "template_4k8ywt8";
+    const PUBLIC_KEY = "BKs6xUt5NqoNUnoCw";
+
+    // ✨ 5. 发送逻辑
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+      .then((result) => {
+          // 成功
+          console.log('SUCCESS!', result.text);
+          setToast({ message: "We received your message!", type: 'success' });
+          setFormData({ name: '', email: '', message: '' }); // 清空表单
+          setIsSubmitting(false);
+      }, (error) => {
+          // 失败
+          console.log('FAILED...', error.text);
+          setToast({ message: "Failed to send. Please try again.", type: 'error' });
+          setIsSubmitting(false);
+      });
   };
 
   return (
-    <div className="bg-black text-white font-sans">
+    <div className="bg-transparent text-white font-sans min-h-screen">
 
-      {/* --- Hero Section (保持不动，不用 RevealOnScroll，因为一进来就要看到) --- */}
+      {/* --- Hero Section --- */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-
-        {/* 背景图 + Ken Burns 动画 */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center animate-ken-burns opacity-60"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80')" }}
         ></div>
-
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black z-0"></div>
 
         <div className="relative z-10 text-center px-4">
@@ -42,7 +105,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- Intro Text Section (Fade Up) --- */}
+      {/* --- Intro Text Section --- */}
       <section className="py-20 px-6 bg-gray-900/50">
         <div className="max-w-4xl mx-auto text-center">
           <RevealOnScroll variant="fade-up">
@@ -56,17 +119,17 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- Video Teaser Section (Zoom In 效果，强调视觉冲击) --- */}
-      <section className="py-24 bg-black relative overflow-hidden border-y border-gray-900">
+      {/* --- Video Teaser Section --- */}
+      <section className="py-24 bg-black/80 relative overflow-hidden border-y border-gray-900">
          <div className="max-w-7xl mx-auto px-6 text-center">
-            <RevealOnScroll variant="zoom-in"> {/* ✨ 视频放大出现 */}
+            <RevealOnScroll variant="zoom-in">
                 <h2 className="text-3xl md:text-5xl font-bold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
                    See It In Action
                 </h2>
                 <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] border border-gray-800 group hover:border-purple-500 transition-colors duration-500">
                    <iframe
                      className="w-full h-full"
-                     src="" //Rmb insert video in there
+                     src=""
                      title="Game Trailer"
                      frameBorder="0"
                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -77,29 +140,38 @@ const Home = () => {
          </div>
       </section>
 
-      {/* --- Contact Form Section (Slide Up / Fade Up) --- */}
+      {/* --- Contact Form Section --- */}
       <section className="py-24 px-6 relative bg-gray-900/30">
         <div className="max-w-3xl mx-auto">
           <RevealOnScroll variant="fade-up">
             <div className="bg-gray-900/80 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-gray-800 shadow-2xl hover:border-cyan-500/30 transition-colors duration-500">
               <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold text-white mb-4">Start a Project</h2>
-                <p className="text-gray-400">Have a crazy game idea? Let's build it together.</p>
+                <h2 className="text-3xl font-bold text-white mb-4">Get In Touch</h2>
+                <p className="text-gray-400">Have a crazy game idea? We’d love to hear from you.</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              {/* ✨ 6. 在这里加上 ref={formRef}，这是关键！ */}
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
                     <input
+                      required
                       type="text"
+                      name="name" // 必须和 EmailJS 模板里的 {{name}} 一致
+                      value={formData.name}
+                      onChange={handleChange}
                       className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
                     <input
+                      required
                       type="email"
+                      name="email" // 必须和 EmailJS 模板里的 {{email}} 一致
+                      value={formData.email}
+                      onChange={handleChange}
                       className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
                     />
                   </div>
@@ -108,22 +180,42 @@ const Home = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
                   <textarea
+                    required
                     rows="4"
+                    name="message" // 必须和 EmailJS 模板里的 {{message}} 一致
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg font-bold uppercase tracking-widest hover:from-purple-500 hover:to-cyan-500 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-cyan-500/25"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest transition-all duration-300 transform shadow-lg flex justify-center items-center
+                    ${isSubmitting
+                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 hover:-translate-y-1 hover:shadow-cyan-500/25 text-white'
+                    }`}
                 >
-                  Send Message
+                   {isSubmitting ? (
+                       <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                   ) : (
+                       "Send Message"
+                   )}
                 </button>
               </form>
             </div>
           </RevealOnScroll>
         </div>
       </section>
+
+      {/* Portal Toast */}
+      {toast && ReactDOM.createPortal(
+          // 传递 message 和 type (error/success)
+          <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />,
+          document.body
+      )}
 
     </div>
   );

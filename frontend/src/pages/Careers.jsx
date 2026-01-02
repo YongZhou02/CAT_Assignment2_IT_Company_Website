@@ -1,26 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom'; // ✨ 引入 ReactDOM
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import RevealOnScroll from '../components/RevealOnScroll';
+import emailjs from '@emailjs/browser';
 
-// 👇 1. Toast 组件 (保持不变)
-const Toast = ({ message, onClose }) => {
+const Toast = ({ message, type, onClose }) => {
     useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, 3000);
+        const timer = setTimeout(() => { onClose() }, 3000);
         return () => clearTimeout(timer);
     }, [onClose]);
 
+    const isError = type === 'error';
+    const borderColor = isError ? 'border-red-500/50' : 'border-green-500/50';
+    const textColor = isError ? 'text-red-400' : 'text-green-400';
+    const bgColor = isError ? 'bg-red-500/20' : 'bg-green-500/20';
+
     return (
-        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.3)] text-white px-6 py-4 rounded-xl animate-bounce-in">
-            <div className="bg-green-500/20 p-2 rounded-full">
-                <svg className="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border ${borderColor} text-white px-6 py-4 rounded-xl animate-bounce-in shadow-2xl`}>
+            <div className={`${bgColor} p-2 rounded-full`}>
+                <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {isError ?
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> :
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    }
                 </svg>
             </div>
             <div>
-                <h4 className="font-bold text-green-400">Success!</h4>
+                <h4 className={`font-bold ${textColor}`}>{isError ? 'Error' : 'Application Sent!'}</h4>
                 <p className="text-sm text-gray-300">{message}</p>
             </div>
         </div>
@@ -28,7 +34,6 @@ const Toast = ({ message, onClose }) => {
 };
 
 const Careers = () => {
-    // 职位数据
     const jobs = [
         {
             id: 1,
@@ -99,17 +104,15 @@ const Careers = () => {
         }
     ];
 
-    // 状态管理
+    const formRef = useRef();
+    const fileInputRef = useRef(null);
+
     const [applyingJob, setApplyingJob] = useState(null);
     const [viewingJob, setViewingJob] = useState(null);
     const [toast, setToast] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // 文件上传状态
     const [resumeFile, setResumeFile] = useState(null);
-    const fileInputRef = useRef(null);
 
-    // 处理文件
     const handleFileSelect = (e) => {
         const file = e.target.files[0];
         if (file) setResumeFile(file);
@@ -118,7 +121,14 @@ const Careers = () => {
     const handleDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        if (file) setResumeFile(file);
+        if (file) {
+            setResumeFile(file);
+            if (fileInputRef.current) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInputRef.current.files = dataTransfer.files;
+            }
+        }
     };
 
     const handleDragOver = (e) => {
@@ -131,7 +141,6 @@ const Careers = () => {
         if (fileInputRef.current) fileInputRef.current.value = "";
     };
 
-    // 处理提交
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -142,13 +151,22 @@ const Careers = () => {
 
         setIsSubmitting(true);
 
-        setTimeout(() => {
-            setIsSubmitting(false);
-            const jobTitle = applyingJob.title;
-            setApplyingJob(null);
-            setResumeFile(null);
-            setToast(`Application for ${jobTitle} has been sent!`);
-        }, 1500);
+        const SERVICE_ID = "service_blwprns";
+        const TEMPLATE_ID = "template_mj29lvp";
+        const PUBLIC_KEY = "BKs6xUt5NqoNUnoCw";
+
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+            .then((result) => {
+                console.log('SUCCESS!', result.text);
+                setIsSubmitting(false);
+                setApplyingJob(null);
+                setResumeFile(null);
+                setToast({ message: "Application sent successfully! (Check attachment)", type: 'success' });
+            }, (error) => {
+                console.log('FAILED...', error.text);
+                setIsSubmitting(false);
+                setToast({ message: "Failed. Maybe file too big? (Limit 50KB)", type: 'error' });
+            });
     };
 
     const handleApplyFromDetails = () => {
@@ -161,7 +179,6 @@ const Careers = () => {
         <div className="bg-transparent min-h-screen text-white pt-24 pb-20 px-6 relative">
 
             <div className="max-w-5xl mx-auto">
-                {/* Header Animation */}
                 <RevealOnScroll variant="fade-up">
                     <div className="text-center mb-16">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -173,7 +190,6 @@ const Careers = () => {
                     </div>
                 </RevealOnScroll>
 
-                {/* Job List with Staggered Animation */}
                 <div className="grid gap-6">
                     {jobs.map((job, index) => (
                         <RevealOnScroll key={job.id} variant="fade-up" delay={index * 150}>
@@ -189,10 +205,7 @@ const Careers = () => {
                                         <p className="text-gray-300">{job.description}</p>
                                     </div>
                                     <div className="mt-4 md:mt-0 shrink-0">
-                                        <button
-                                            onClick={() => setViewingJob(job)}
-                                            className="px-6 py-2 bg-white text-black font-bold rounded-lg hover:bg-cyan-400 hover:text-black transition-colors"
-                                        >
+                                        <button onClick={() => setViewingJob(job)} className="px-6 py-2 bg-white text-black font-bold rounded-lg hover:bg-cyan-400 hover:text-black transition-colors">
                                             View Details
                                         </button>
                                     </div>
@@ -202,38 +215,28 @@ const Careers = () => {
                     ))}
                 </div>
 
-                {/* Footer Section Animation */}
                 <RevealOnScroll variant="fade-up" delay={200}>
                     <div className="mt-16 text-center bg-gradient-to-r from-gray-900 to-gray-800 p-10 rounded-2xl border border-gray-700">
                         <h3 className="text-2xl font-bold mb-4">Don't see your role?</h3>
-                        <p className="text-gray-400 mb-6">
-                            We are always interested in meeting talented people. Send your portfolio to careers@pixelforge.games
-                        </p>
-                        <Link
-                            to="/"
-                            className="inline-block px-8 py-3 rounded-lg border border-gray-600 text-white font-bold hover:bg-white hover:text-black hover:border-white transition-all duration-300"
-                        >
+                        <p className="text-gray-400 mb-6">We are always interested in meeting talented people. Send your portfolio to careers@pixelforge.games</p>
+                        <Link to="/" className="inline-block px-8 py-3 rounded-lg border border-gray-600 text-white font-bold hover:bg-white hover:text-black hover:border-white transition-all duration-300">
                             Back to Home
                         </Link>
                     </div>
                 </RevealOnScroll>
             </div>
 
-            {/* ✨ 使用 Portal 将 Toast 渲染到 document.body (解决 z-index 问题) */}
             {toast && ReactDOM.createPortal(
-                <Toast message={toast} onClose={() => setToast(null)} />,
+                <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />,
                 document.body
             )}
 
-            {/* ✨ 使用 Portal 将 JD Modal 渲染到 document.body */}
             {viewingJob && ReactDOM.createPortal(
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
                     <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
                         <div className="p-8 border-b border-gray-800 sticky top-0 bg-gray-900/95 backdrop-blur z-10 flex justify-between items-start">
                             <div>
-                                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">
-                                    {viewingJob.title}
-                                </h2>
+                                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">{viewingJob.title}</h2>
                                 <div className="flex gap-3 text-sm text-gray-400">
                                     <span className="bg-gray-800 px-2 py-1 rounded">{viewingJob.department}</span>
                                     <span className="bg-gray-800 px-2 py-1 rounded">{viewingJob.location}</span>
@@ -243,51 +246,10 @@ const Careers = () => {
                                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                         </div>
-
                         <div className="p-8 space-y-8">
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                    <span className="text-purple-400">◈</span> Responsibilities
-                                </h3>
-                                <ul className="space-y-2 text-gray-300">
-                                    {viewingJob.responsibilities.map((item, idx) => (
-                                        <li key={idx} className="flex gap-3">
-                                            <span className="text-gray-600 mt-1.5">•</span>
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                    <span className="text-cyan-400">◈</span> Requirements
-                                </h3>
-                                <ul className="space-y-2 text-gray-300">
-                                    {viewingJob.requirements.map((item, idx) => (
-                                        <li key={idx} className="flex gap-3">
-                                            <span className="text-gray-600 mt-1.5">•</span>
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            {viewingJob.bonus && viewingJob.bonus.length > 0 && (
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="text-green-400">◈</span> Nice to Have
-                                    </h3>
-                                    <ul className="space-y-2 text-gray-300">
-                                        {viewingJob.bonus.map((item, idx) => (
-                                            <li key={idx} className="flex gap-3">
-                                                <span className="text-gray-600 mt-1.5">+</span>
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                            <div><h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><span className="text-purple-400">◈</span> Responsibilities</h3><ul className="space-y-2 text-gray-300">{viewingJob.responsibilities.map((item, idx) => (<li key={idx} className="flex gap-3"><span className="text-gray-600 mt-1.5">•</span><span>{item}</span></li>))}</ul></div>
+                            <div><h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><span className="text-cyan-400">◈</span> Requirements</h3><ul className="space-y-2 text-gray-300">{viewingJob.requirements.map((item, idx) => (<li key={idx} className="flex gap-3"><span className="text-gray-600 mt-1.5">•</span><span>{item}</span></li>))}</ul></div>
                         </div>
-
                         <div className="p-6 border-t border-gray-800 bg-gray-900/50 flex justify-end gap-4 sticky bottom-0">
                             <button onClick={() => setViewingJob(null)} className="px-6 py-2 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors">Close</button>
                             <button onClick={handleApplyFromDetails} className="px-8 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold hover:from-purple-500 hover:to-cyan-500 shadow-lg hover:shadow-purple-500/20 transition-all">Apply for this Role</button>
@@ -297,7 +259,6 @@ const Careers = () => {
                 document.body
             )}
 
-            {/* ✨ 使用 Portal 将 Application Form Modal 渲染到 document.body */}
             {applyingJob && ReactDOM.createPortal(
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
                     <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-lg shadow-2xl relative">
@@ -311,27 +272,32 @@ const Careers = () => {
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                        <form ref={formRef} onSubmit={handleSubmit} className="p-6 space-y-4">
+
+                            <input type="hidden" name="job_title" value={applyingJob.title} />
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">Full Name</label>
-                                <input required type="text" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" placeholder="John Doe" />
+                                <input required type="text" name="name" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
-                                <input required type="email" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" placeholder="john@example.com" />
+                                <input required type="email" name="email" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">Portfolio / LinkedIn URL</label>
-                                <input type="url" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" placeholder="https://..." />
+                                <input type="url" name="portfolio" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </div>
 
+                            {/* ✨ 修复点：转义了 < 为 &lt; 并删除了行内注释 */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Resume / CV</label>
+                                <label className="block text-sm font-medium text-gray-400 mb-1">Resume / CV (PDF &lt; 50KB)</label>
                                 <input
                                     type="file"
+                                    name="resume"
                                     ref={fileInputRef}
                                     className="hidden"
-                                    accept=".pdf,.doc,.docx"
+                                    accept=".pdf,.doc,.docx,.txt"
                                     onChange={handleFileSelect}
                                 />
                                 <div
@@ -353,6 +319,7 @@ const Careers = () => {
                                             <p className="text-xs text-green-400 mt-1">Ready to upload</p>
                                             <button
                                                 onClick={removeFile}
+                                                type="button"
                                                 className="absolute top-2 right-2 p-1 bg-gray-900 rounded-full text-gray-400 hover:text-white"
                                             >
                                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -366,7 +333,7 @@ const Careers = () => {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                             </svg>
                                             <p className="text-gray-400 text-sm group-hover:text-white">Click to upload or drag and drop</p>
-                                            <p className="text-xs text-gray-600 mt-1">PDF, DOCX up to 5MB</p>
+                                            <p className="text-xs text-gray-600 mt-1">PDF, DOCX (Max 50KB)</p>
                                         </>
                                     )}
                                 </div>
