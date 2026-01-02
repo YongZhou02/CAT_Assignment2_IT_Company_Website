@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isVisible, setIsVisible] = useState(true); // 控制显示/隐藏
-    const [lastScrollY, setLastScrollY] = useState(0); // 记录上一次滚动位置
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
     const location = useLocation();
 
@@ -14,21 +14,17 @@ const Navbar = () => {
                 const currentScrollY = window.scrollY;
 
                 if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    // 如果是向下滑，并且已经滚了一段距离 (>100px) -> 隐藏 Navbar
                     setIsVisible(false);
                 } else {
-                    // 如果是向上滑 -> 显示 Navbar
                     setIsVisible(true);
                 }
 
-                // 记录当前位置，供下一次比较
                 setLastScrollY(currentScrollY);
             }
         };
 
         window.addEventListener('scroll', controlNavbar);
 
-        // 清理监听器
         return () => {
             window.removeEventListener('scroll', controlNavbar);
         };

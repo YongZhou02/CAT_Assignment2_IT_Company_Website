@@ -289,7 +289,6 @@ const Careers = () => {
                                 <input type="url" name="portfolio" className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </div>
 
-                            {/* ✨ 修复点：转义了 < 为 &lt; 并删除了行内注释 */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">Resume / CV (PDF &lt; 50KB)</label>
                                 <input

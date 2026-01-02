@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { gamesData } from '../data/gamesData';
-import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
+import RevealOnScroll from '../components/RevealOnScroll';
 
 const Games = () => {
     const games = gamesData;
@@ -9,7 +9,7 @@ const Games = () => {
 
     const openModal = (game) => {
         setSelectedGame(game);
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
@@ -55,8 +55,6 @@ const Games = () => {
                 {/* Games Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     {games.map((game, index) => (
-                        // ✨ 重点：在这里加上 RevealOnScroll，并使用 index 来控制延迟
-                        // index * 100 意味着：第一个延迟0ms，第二个100ms，第三个200ms... 形成波浪效果
                         <RevealOnScroll key={game.id} delay={index * 100} variant="fade-up">
                             <div
                                 onClick={() => openModal(game)}

@@ -1,5 +1,5 @@
 import React from 'react';
-import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
+import RevealOnScroll from '../components/RevealOnScroll';
 
 const Team = () => {
     const teamMembers = [
@@ -42,7 +42,6 @@ const Team = () => {
         <div className="bg-transparent w-full py-24 pt-24 pb-20 px-6">
             <div className="max-w-7xl mx-auto">
 
-                {/* ✨ Header Animation: 整体向上浮现 */}
                 <RevealOnScroll variant="fade-up">
                     <div className="text-center mb-16">
                         <h1 className="text-5xl font-bold text-white mb-4">
@@ -56,8 +55,6 @@ const Team = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {teamMembers.map((member, index) => (
-                        // ✨ 重点：在这里包裹 RevealOnScroll
-                        // index * 200: 第一个0ms，第二个200ms，第三个400ms，波浪感更强
                         <RevealOnScroll key={member.id} delay={index * 200} variant="fade-up">
                             <div
                                 className={`bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 transition-all duration-300 ${member.border} hover:-translate-y-2 hover:shadow-2xl h-full`}

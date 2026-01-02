@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'; // ✨ 引入 useEffect
-import { Routes, Route, useLocation } from 'react-router-dom'; // ✨ 引入 useLocation
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Games from './pages/Games';
@@ -9,13 +9,13 @@ import Careers from './pages/Careers';
 import FAQ from './pages/FAQ';
 import Footer from './components/Footer';
 import StarBackground from './components/StarBackground';
-import { SpeedInsights } from "@vercel/speed-insights/react"; // 如果没用 vercel 就注释掉
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        window.scrollTo(0, 0); // 每次路由路径变化时，强制滚回顶部
+        window.scrollTo(0, 0);
     }, [pathname]);
 
     return null;
@@ -27,7 +27,6 @@ function App() {
 
             <StarBackground />
 
-            {/* 👇 放在这里，它会在每次切换页面时工作 */}
             <ScrollToTop />
 
             <div className="relative z-50">

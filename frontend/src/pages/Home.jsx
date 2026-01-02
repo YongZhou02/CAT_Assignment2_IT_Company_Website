@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'; // ✨ 1. 引入 useRef
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import RevealOnScroll from '../components/RevealOnScroll';
-import emailjs from '@emailjs/browser'; // ✨ 2. 引入 EmailJS
+import emailjs from '@emailjs/browser';
 
-// 👇 Toast 组件 (稍微升级一下，支持显示错误红色)
 const Toast = ({ message, type, onClose }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -13,7 +12,6 @@ const Toast = ({ message, type, onClose }) => {
         return () => clearTimeout(timer);
     }, [onClose]);
 
-    // 根据类型决定颜色 (success=绿, error=红)
     const isError = type === 'error';
     const borderColor = isError ? 'border-red-500/50' : 'border-green-500/50';
     const shadowColor = isError ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'shadow-[0_0_15px_rgba(34,197,94,0.3)]';
@@ -38,12 +36,11 @@ const Toast = ({ message, type, onClose }) => {
 };
 
 const Home = () => {
-  const formRef = useRef(); // ✨ 3. 创建 ref 用于获取表单内容
+  const formRef = useRef();
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Toast 状态改为对象，包含消息和类型
   const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
@@ -55,8 +52,6 @@ const Home = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // ✨ 4. EmailJS 配置 (请填入你自己的 ID)
-    // 去 EmailJS 官网 -> Account / Email Services / Email Templates 找这些 ID
     const SERVICE_ID = "service_blwprns";
     const TEMPLATE_ID = "template_4k8ywt8";
     const PUBLIC_KEY = "BKs6xUt5NqoNUnoCw";
@@ -67,10 +62,9 @@ const Home = () => {
           // 成功
           console.log('SUCCESS!', result.text);
           setToast({ message: "We received your message!", type: 'success' });
-          setFormData({ name: '', email: '', message: '' }); // 清空表单
+          setFormData({ name: '', email: '', message: '' });
           setIsSubmitting(false);
       }, (error) => {
-          // 失败
           console.log('FAILED...', error.text);
           setToast({ message: "Failed to send. Please try again.", type: 'error' });
           setIsSubmitting(false);
@@ -150,7 +144,6 @@ const Home = () => {
                 <p className="text-gray-400">Have a crazy game idea? We’d love to hear from you.</p>
               </div>
 
-              {/* ✨ 6. 在这里加上 ref={formRef}，这是关键！ */}
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -158,7 +151,7 @@ const Home = () => {
                     <input
                       required
                       type="text"
-                      name="name" // 必须和 EmailJS 模板里的 {{name}} 一致
+                      name="name"
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
@@ -169,7 +162,7 @@ const Home = () => {
                     <input
                       required
                       type="email"
-                      name="email" // 必须和 EmailJS 模板里的 {{email}} 一致
+                      name="email"
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
@@ -182,7 +175,7 @@ const Home = () => {
                   <textarea
                     required
                     rows="4"
-                    name="message" // 必须和 EmailJS 模板里的 {{message}} 一致
+                    name="message"
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
@@ -212,7 +205,6 @@ const Home = () => {
 
       {/* Portal Toast */}
       {toast && ReactDOM.createPortal(
-          // 传递 message 和 type (error/success)
           <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />,
           document.body
       )}

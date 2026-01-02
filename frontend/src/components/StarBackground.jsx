@@ -18,7 +18,6 @@ const StarBackground = () => {
 
         const createStars = () => {
             stars = [];
-            // 分母越大，星星越少。原本是4000，改成6000让背景清爽一点
             const numStars = Math.floor((canvas.width * canvas.height) / 4000);
 
             for (let i = 0; i < numStars; i++) {
@@ -26,7 +25,7 @@ const StarBackground = () => {
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     size: Math.random() * 3 + 1.5,
-                    speedX: (Math.random() - 0.5) * 0.1, // 速度放慢，更优雅
+                    speedX: (Math.random() - 0.5) * 0.1,
                     speedY: Math.random() * 0.1 + 0.02,
                     opacity: Math.random() * 0.5 + 0.1,
                     twinkleSpeed: Math.random() * 0.01 + 0.005,
@@ -86,7 +85,7 @@ const StarBackground = () => {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 pointer-events-none z-0"
-            style={{ opacity: 0.4 }} // 全局透明度，不抢内容风头
+            style={{ opacity: 0.4 }}
         />
     );
 };

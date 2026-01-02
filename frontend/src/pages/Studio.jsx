@@ -2,7 +2,6 @@ import React from 'react';
 import RevealOnScroll from '../components/RevealOnScroll';
 
 const Studio = () => {
-    // ✨ 删除了 Canvas 相关的 useRef 和 useEffect，代码清爽多了！
 
     const values = [
         {
@@ -28,12 +27,10 @@ const Studio = () => {
     ];
 
     return (
-        // 去掉了 ref={canvasRef}，因为背景由 App.jsx 统一管理
         <div className="w-full py-24 pt-20 relative overflow-hidden">
 
             {/* --- Hero Section --- */}
             <div className="relative overflow-hidden py-20 z-10">
-                {/* Nebula Blobs (这些彩色光晕保留，因为它们是 Studio 特有的氛围) */}
                 <div className="absolute inset-0 opacity-30">
                     <div className="absolute top-20 left-20 w-72 h-72 bg-purple-600 rounded-full filter blur-[100px] animate-pulse"></div>
                     <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-600 rounded-full filter blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>

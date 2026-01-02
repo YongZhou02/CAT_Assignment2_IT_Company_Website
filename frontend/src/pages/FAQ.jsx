@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import RevealOnScroll from '../components/RevealOnScroll'; // ✨ 引入动画组件
+import RevealOnScroll from '../components/RevealOnScroll';
 
 const FAQ = () => {
-    // FAQ 数据
     const faqs = [
         {
             question: "What game engine does PixelForge use?",
@@ -36,7 +35,6 @@ const FAQ = () => {
         <div className="bg-transparent min-h-screen text-white pt-24 pb-20 px-6">
             <div className="max-w-3xl mx-auto">
 
-                {/* ✨ Header Animation */}
                 <RevealOnScroll variant="fade-up">
                     <div className="text-center mb-16">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -48,7 +46,6 @@ const FAQ = () => {
 
                 <div className="space-y-4">
                     {faqs.map((faq, index) => (
-                        // ✨ 重点：给每一个问题条目加上延迟入场动画
                         <RevealOnScroll key={index} variant="fade-up" delay={index * 100}>
                             <div
                                 className={`bg-gray-900/50 border rounded-2xl overflow-hidden transition-all duration-300 ${openIndex === index ? 'border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'border-gray-800 hover:border-gray-700'}`}
