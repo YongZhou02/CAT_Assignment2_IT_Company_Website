@@ -53,7 +53,7 @@ const Studio = () => {
                 </div>
             </div>
 
-            {/* --- Mission & Vision Cards (Point Form 版) --- */}
+            {/* --- Mission & Vision Cards (Point Form) --- */}
             <div className="max-w-5xl mx-auto px-6 pb-24 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
@@ -210,7 +210,7 @@ const Studio = () => {
                             <div className="group p-6 bg-black/50 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all duration-300 text-center hover:-translate-y-2 h-full">
                                 <div className="w-16 h-16 mx-auto mb-4 bg-gray-800 rounded-full flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-colors duration-300">
                                     <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
+                                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z" />
                                     </svg>
                                 </div>
                                 <h3 className="text-xl font-bold text-white mb-2">Modern Web</h3>

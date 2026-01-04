@@ -5,34 +5,34 @@ import RevealOnScroll from '../components/RevealOnScroll';
 import emailjs from '@emailjs/browser';
 
 const Toast = ({ message, type, onClose }) => {
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, 3000);
-        return () => clearTimeout(timer);
-    }, [onClose]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
-    const isError = type === 'error';
-    const borderColor = isError ? 'border-red-500/50' : 'border-green-500/50';
-    const shadowColor = isError ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'shadow-[0_0_15px_rgba(34,197,94,0.3)]';
-    const textColor = isError ? 'text-red-400' : 'text-green-400';
-    const bgColor = isError ? 'bg-red-500/20' : 'bg-green-500/20';
+  const isError = type === 'error';
+  const borderColor = isError ? 'border-red-500/50' : 'border-green-500/50';
+  const shadowColor = isError ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'shadow-[0_0_15px_rgba(34,197,94,0.3)]';
+  const textColor = isError ? 'text-red-400' : 'text-green-400';
+  const bgColor = isError ? 'bg-red-500/20' : 'bg-green-500/20';
 
-    return (
-        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border ${borderColor} ${shadowColor} text-white px-6 py-4 rounded-xl animate-bounce-in`}>
-            <div className={`${bgColor} p-2 rounded-full`}>
-                {isError ? (
-                    <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                ) : (
-                    <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                )}
-            </div>
-            <div>
-                <h4 className={`font-bold ${textColor}`}>{isError ? 'Error' : 'Success!'}</h4>
-                <p className="text-sm text-gray-300">{message}</p>
-            </div>
-        </div>
-    );
+  return (
+    <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-3 bg-gray-900 border ${borderColor} ${shadowColor} text-white px-6 py-4 rounded-xl animate-bounce-in`}>
+      <div className={`${bgColor} p-2 rounded-full`}>
+        {isError ? (
+          <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        ) : (
+          <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+        )}
+      </div>
+      <div>
+        <h4 className={`font-bold ${textColor}`}>{isError ? 'Error' : 'Success!'}</h4>
+        <p className="text-sm text-gray-300">{message}</p>
+      </div>
+    </div>
+  );
 };
 
 const Home = () => {
@@ -44,8 +44,8 @@ const Home = () => {
   const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -56,18 +56,18 @@ const Home = () => {
     const TEMPLATE_ID = "template_4k8ywt8";
     const PUBLIC_KEY = "BKs6xUt5NqoNUnoCw";
 
-    // ✨ 5. 发送逻辑
+    // ✨ 5. Sending Logic
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
       .then((result) => {
-          // 成功
-          console.log('SUCCESS!', result.text);
-          setToast({ message: "We received your message!", type: 'success' });
-          setFormData({ name: '', email: '', message: '' });
-          setIsSubmitting(false);
+        // Success
+        console.log('SUCCESS!', result.text);
+        setToast({ message: "We received your message!", type: 'success' });
+        setFormData({ name: '', email: '', message: '' });
+        setIsSubmitting(false);
       }, (error) => {
-          console.log('FAILED...', error.text);
-          setToast({ message: "Failed to send. Please try again.", type: 'error' });
-          setIsSubmitting(false);
+        console.log('FAILED...', error.text);
+        setToast({ message: "Failed to send. Please try again.", type: 'error' });
+        setIsSubmitting(false);
       });
   };
 
@@ -115,23 +115,23 @@ const Home = () => {
 
       {/* --- Video Teaser Section --- */}
       <section className="py-24 bg-black/80 relative overflow-hidden border-y border-gray-900">
-         <div className="max-w-7xl mx-auto px-6 text-center">
-            <RevealOnScroll variant="zoom-in">
-                <h2 className="text-3xl md:text-5xl font-bold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-                   See It In Action
-                </h2>
-                <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] border border-gray-800 group hover:border-purple-500 transition-colors duration-500">
-                    <iframe
-                        className="w-full h-full"
-                        src="https://www.youtube.com/embed/8ZXPYOzG4V8"
-                        title="PixelForge"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
-                </div>
-            </RevealOnScroll>
-         </div>
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <RevealOnScroll variant="zoom-in">
+            <h2 className="text-3xl md:text-5xl font-bold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+              See It In Action
+            </h2>
+            <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] border border-gray-800 group hover:border-purple-500 transition-colors duration-500">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/8ZXPYOzG4V8"
+                title="PixelForge"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </RevealOnScroll>
+        </div>
       </section>
 
       {/* --- Contact Form Section --- */}
@@ -187,15 +187,15 @@ const Home = () => {
                   disabled={isSubmitting}
                   className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest transition-all duration-300 transform shadow-lg flex justify-center items-center
                     ${isSubmitting
-                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 hover:-translate-y-1 hover:shadow-cyan-500/25 text-white'
+                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 hover:-translate-y-1 hover:shadow-cyan-500/25 text-white'
                     }`}
                 >
-                   {isSubmitting ? (
-                       <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                   ) : (
-                       "Send Message"
-                   )}
+                  {isSubmitting ? (
+                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
               </form>
             </div>
@@ -205,8 +205,8 @@ const Home = () => {
 
       {/* Portal Toast */}
       {toast && ReactDOM.createPortal(
-          <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />,
-          document.body
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />,
+        document.body
       )}
 
     </div>

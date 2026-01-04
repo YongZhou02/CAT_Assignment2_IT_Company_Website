@@ -43,7 +43,7 @@ const Navbar = () => {
     return (
         <nav
             className={`fixed top-0 w-full z-50 transition-transform duration-300 bg-transparent py-4
-            ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} // ✨ 核心逻辑：控制 Y 轴位移
+            ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} // Core Logic: Control Y-axis displacement
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">

@@ -31,9 +31,9 @@ const RevealOnScroll = ({ children, variant = "fade-up", delay = 0 }) => {
 
     const variants = {
         "fade-up": isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20",
-        "slide-left": isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20", // 从左边飞进来
-        "slide-right": isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20", // 从右边飞进来
-        "zoom-in": isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90", // 从小变大
+        "slide-left": isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20", // Fly in from left
+        "slide-right": isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20", // Fly in from right
+        "zoom-in": isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90", // Zoom in
     };
 
     const transitionDelay = delay ? `delay-[${delay}ms]` : "";
