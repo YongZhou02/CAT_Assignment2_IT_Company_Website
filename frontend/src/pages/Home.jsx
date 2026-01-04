@@ -56,7 +56,6 @@ const Home = () => {
     const TEMPLATE_ID = "template_4k8ywt8";
     const PUBLIC_KEY = "BKs6xUt5NqoNUnoCw";
 
-    // ✨ 5. 发送逻辑
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
       .then((result) => {
           // 成功
