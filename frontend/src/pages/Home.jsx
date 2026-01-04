@@ -121,14 +121,14 @@ const Home = () => {
                    See It In Action
                 </h2>
                 <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] border border-gray-800 group hover:border-purple-500 transition-colors duration-500">
-                   <iframe
-                     className="w-full h-full"
-                     src=""
-                     title="Game Trailer"
-                     frameBorder="0"
-                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                     allowFullScreen
-                   ></iframe>
+                    <iframe
+                        className="w-full h-full"
+                        src="https://www.youtube.com/embed/8ZXPYOzG4V8"
+                        title="PixelForge"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
                 </div>
             </RevealOnScroll>
          </div>
