@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <footer className="bg-black border-t border-gray-800 text-white relative overflow-hidden" id="contact">
-            {/* Top decorative glow - adds atmosphere */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -36,7 +35,6 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* 3. Contact & Socials Section */}
                     <div>
                         <h3 className="text-xl font-bold mb-4 text-white">Contact Base</h3>
                         <ul className="space-y-3 text-gray-400 text-sm mb-6">
@@ -54,7 +52,6 @@ const Footer = () => {
                             </li>
                         </ul>
 
-                        {/* ✨ Social Media Icons ✨ */}
                         <div>
                             <h4 className="text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">Join the Community</h4>
                             <div className="flex gap-4">
