@@ -27,7 +27,7 @@ const Studio = () => {
     ];
 
     return (
-        <div className="w-full py-24 pt-20 relative overflow-hidden">
+        <div className="w-full py-24 pt-20 relative overflow-hidden bg-black text-white">
 
             {/* --- Hero Section --- */}
             <div className="relative overflow-hidden py-20 z-10">
@@ -53,52 +53,81 @@ const Studio = () => {
                 </div>
             </div>
 
-            {/* --- Mission & Vision Cards --- */}
-            <div className="max-w-5xl mx-auto px-6 pb-16 relative z-10">
+            {/* --- Mission & Vision Cards (Point Form 版) --- */}
+            <div className="max-w-5xl mx-auto px-6 pb-24 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     {/* Mission Card */}
                     <RevealOnScroll variant="slide-left">
-                        <div className="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-purple-500 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2 h-full">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 rounded-full filter blur-2xl group-hover:bg-purple-600/20 transition-all duration-500"></div>
-                            <div className="relative z-10">
-                                <div className="flex items-center mb-6">
-                                    <div className="bg-purple-600/20 p-4 rounded-xl mr-4 group-hover:scale-110 group-hover:bg-purple-600/30 transition-all duration-300">
-                                        <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                        </svg>
-                                    </div>
-                                    <h2 className="text-3xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">Our Mission</h2>
+                        <div className="group relative bg-gray-900/40 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] h-full">
+                            <div className="flex items-center mb-6">
+                                <div className="bg-purple-500/20 p-3 rounded-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <svg className="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                                 </div>
-                                <p className="text-gray-300 text-lg leading-relaxed">
-                                    To craft unforgettable gaming experiences that transport players to worlds beyond imagination.
-                                    We blend cutting-edge technology with masterful storytelling to create games that don't just
-                                    entertain—they <span className="text-purple-400 font-semibold">inspire, challenge, and unite</span> players across the globe.
-                                </p>
+                                <h2 className="text-2xl font-bold text-white">Our Mission</h2>
                             </div>
+
+                            {/* Point Form */}
+                            <ul className="space-y-5 text-gray-300">
+                                <li className="flex gap-3">
+                                    <span className="text-purple-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Push Boundaries</strong>
+                                        <span className="text-sm text-gray-400">Leveraging UE5 & AI to redefine what's possible in interactive media.</span>
+                                    </div>
+                                </li>
+                                <li className="flex gap-3">
+                                    <span className="text-purple-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Craft Worlds</strong>
+                                        <span className="text-sm text-gray-400">Building immersive, living universes that tell deep, emotional stories.</span>
+                                    </div>
+                                </li>
+                                <li className="flex gap-3">
+                                    <span className="text-purple-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Player First</strong>
+                                        <span className="text-sm text-gray-400">Every mechanic and line of code starts with the player experience.</span>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </RevealOnScroll>
 
                     {/* Vision Card */}
                     <RevealOnScroll variant="slide-right">
-                        <div className="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-cyan-500 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-2 h-full">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-600/10 rounded-full filter blur-2xl group-hover:bg-cyan-600/20 transition-all duration-500"></div>
-                            <div className="relative z-10">
-                                <div className="flex items-center mb-6">
-                                    <div className="bg-cyan-600/20 p-4 rounded-xl mr-4 group-hover:scale-110 group-hover:bg-cyan-600/30 transition-all duration-300">
-                                        <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </div>
-                                    <h2 className="text-3xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">Our Vision</h2>
+                        <div className="group relative bg-gray-900/40 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] h-full">
+                            <div className="flex items-center mb-6">
+                                <div className="bg-cyan-500/20 p-3 rounded-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <svg className="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 </div>
-                                <p className="text-gray-300 text-lg leading-relaxed">
-                                    To become the global standard for <span className="text-cyan-400 font-semibold">immersive interactive entertainment</span>.
-                                    We envision a future where our games are cultural touchstones—experiences that spark creativity,
-                                    foster community, and push the boundaries of what interactive media can achieve.
-                                </p>
+                                <h2 className="text-2xl font-bold text-white">Our Vision</h2>
                             </div>
+
+                            {/* Point Form */}
+                            <ul className="space-y-5 text-gray-300">
+                                <li className="flex gap-3">
+                                    <span className="text-cyan-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Global Standard</strong>
+                                        <span className="text-sm text-gray-400">To become the industry benchmark for visual fidelity and immersion.</span>
+                                    </div>
+                                </li>
+                                <li className="flex gap-3">
+                                    <span className="text-cyan-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Cultural Impact</strong>
+                                        <span className="text-sm text-gray-400">Creating game franchises that become lasting pillars of pop culture.</span>
+                                    </div>
+                                </li>
+                                <li className="flex gap-3">
+                                    <span className="text-cyan-400 font-bold text-lg">▹</span>
+                                    <div>
+                                        <strong className="text-white block mb-1">Inspire Creators</strong>
+                                        <span className="text-sm text-gray-400">Igniting the imagination of the next generation of developers.</span>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </RevealOnScroll>
                 </div>
